@@ -1,0 +1,30 @@
+CC=gcc 
+VPATH=/home/meiqiu/did/did_skd-main/
+DID_DIR=$(VPATH)/did
+DID_KEY=$(VPATH)/did_key
+DID_WALLET=$(VPATH)/did_wallet
+DID_DESISTER=$(VPATH)/did_register
+DID_CONF=$(VPATH)/conf
+DID_COMMON=$(VPATH)/common
+DID_DEMO=$(VPATH)/did_demo/did_demo
+
+SRCS = $(wildcard $(DID_DIR)/*.c $(DID_COMMON)/*.c $(DID_DESISTER)/*.c $(DID_WALLET)/*.c $(DID_KEY)/*.c $(DID_DEMO)/*.c)
+
+OBJS=$(patsubst %c, %o, $(SRCS))
+
+$(warning $(OBJS))
+
+TARGET=main
+
+.PHONY:all clean
+
+all:$(TARGET)
+
+$(TARGET):$(OBJS)
+	$(CC) -o $@ $^
+
+%.o:%.c
+	$(CC) -c $^
+
+clean:
+	rm -f $(OBJS) $(TARGET)
